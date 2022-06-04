@@ -19,10 +19,9 @@ import java.util.List;
 @Service
 public class CrawlServiceImpl implements CrawlService {
 
-    private final FiveMinutesCandleRepository fiveMinutesCandleRepository;
     private final UpbitCandleClient upbitCandleClient;
+    private final FiveMinutesCandleRepository fiveMinutesCandleRepository;
 
-//    @Transactional
     @Override
     public void collectGetCoinCandles(MinuteType minuteType, MarketType market, @NonNull LocalDateTime targetDate) throws Exception {
         int minute = minuteType.getMinute();

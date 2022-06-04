@@ -12,7 +12,7 @@ public class BackTester {
 
     @Exit
     public void run() {
-
+        System.out.println("BackTester.run");
     }
 
 }

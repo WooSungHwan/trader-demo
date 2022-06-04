@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class ApplicationExiter {
+public class ApplicationTerminator {
 
     private final ApplicationContext applicationContext;
     private final ExitCodeGenerator exitCodeGenerator;

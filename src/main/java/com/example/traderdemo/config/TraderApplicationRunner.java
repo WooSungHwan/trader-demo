@@ -1,6 +1,8 @@
 package com.example.traderdemo.config;
 
 import com.example.traderdemo.app.backtest.BackTester;
+import com.example.traderdemo.app.common.annotation.Exit;
+import com.example.traderdemo.app.common.annotation.ExitThrowing;
 import com.example.traderdemo.app.real.Trader;
 import com.example.traderdemo.app.crawl.Crawler;
 import lombok.RequiredArgsConstructor;
@@ -20,17 +22,19 @@ public class TraderApplicationRunner implements ApplicationRunner {
     private final BackTester backTester;
     private final Crawler crawler;
 
+    @ExitThrowing
     @Override
-    public void run(ApplicationArguments args) {
+    public void run(ApplicationArguments args) throws Exception {
         try {
             switch (applicationMode.getApplicationMode()) {
                 case BACK_TEST -> backTester.run();
-                case REAL_TRADE -> { return; }
+                case REAL_TRADE -> trader.run();
                 case CRAWL -> crawler.run();
                 default -> throw new RuntimeException();
             }
         } catch (Exception e) {
             log.error("[트레이더 에러] application.yml 에서 application.mode 속성을 확인해주세요. 현재값 : {}", applicationMode.getMode());
+            throw e;
         }
     }
 }

@@ -19,7 +19,8 @@ public class Crawler {
 
     @Exit
     public void run() throws Exception {
-        crawlService.collectGetCoinCandles(MinuteType.FIVE, MarketType.KRW_BTC, LocalDateTime.of(2022, 1, 1, 0, 0, 0));
+        System.out.println("Crawler.run");
+//        crawlService.collectGetCoinCandles(MinuteType.FIVE, MarketType.KRW_BTC, LocalDateTime.of(2022, 1, 1, 0, 0, 0));
     }
 
 }
