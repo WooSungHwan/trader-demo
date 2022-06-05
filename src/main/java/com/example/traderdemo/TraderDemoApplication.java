@@ -12,11 +12,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.EventListener;
 
 import javax.annotation.PostConstruct;
+import java.text.DecimalFormat;
 import java.util.TimeZone;
 
 @EnableConfigurationProperties({UpbitProperties.class, ApplicationMode.class})
 @SpringBootApplication
 public class TraderDemoApplication {
+
+    public static DecimalFormat df = new DecimalFormat("###,###"); // 출력 숫자 포맷
 
     public static void main(String[] args) {
         SpringApplication.run(TraderDemoApplication.class, args);
