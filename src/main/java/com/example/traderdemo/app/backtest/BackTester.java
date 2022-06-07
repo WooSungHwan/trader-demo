@@ -6,13 +6,12 @@ import com.example.traderdemo.app.backtest.service.CandleService;
 import com.example.traderdemo.app.backtest.service.OrderService;
 import com.example.traderdemo.app.backtest.service.WalletService;
 import com.example.traderdemo.app.backtest.strategy.ask.AskStrategy;
-import com.example.traderdemo.app.backtest.strategy.bid.BidStrategy;
 import com.example.traderdemo.app.backtest.strategy.ask.implementations.RSIAskStrategy;
+import com.example.traderdemo.app.backtest.strategy.bid.BidStrategy;
 import com.example.traderdemo.app.backtest.strategy.bid.implementations.RSIBidStrategy;
 import com.example.traderdemo.app.common.annotation.Exit;
 import com.example.traderdemo.app.common.entity.FiveMinutesCandle;
 import com.example.traderdemo.app.common.enums.MarketType;
-import com.trader.common.indicators.result.BollingerBands;
 import com.trader.common.indicators.result.RSIs;
 import com.trader.common.utils.IndicatorUtil;
 import lombok.RequiredArgsConstructor;
@@ -102,12 +101,22 @@ public class BackTester {
                 orderService.bid(targetCandle, walletList.getBidableWallet());
             }
 
-            // TODO fetch
+            // 종가로 fetch
+            List<AccountCoinWallet> fetchWallets = walletService.fetchWallet(market, targetCandle.getTradePrice());
+            WalletList result = WalletList.of(fetchWallets);
+            printWalletInfo(result);
 
-            // TODO 현재상황 로그출력
-
-            // TODO 기간종료
+            // 기간종료
+            if (end.isBefore(targetCandle.getCandleDateTimeKst())) {
+                over = true;
+            }
+            targetDate = targetDate.plusMinutes(5);
         }
+    }
 
+    private void printWalletInfo(WalletList result) {
+        if (result.isNotEmpty()) {
+            log.info(result.getWalletSummaryInfo());
+        }
     }
 }

@@ -7,9 +7,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional(readOnly = true)
 @Slf4j
@@ -40,5 +42,16 @@ public class WalletService {
     @Transactional
     public void save(AccountCoinWallet wallet) {
         repository.save(wallet);
+    }
+
+    @Transactional
+    public List<AccountCoinWallet> fetchWallet(MarketType market, Double tradePrice) {
+        List<AccountCoinWallet> wallets = repository.findByMarket(market);
+        wallets.forEach(wallet -> {
+            if (!wallet.isEmpty()) {
+                wallet.fetch(tradePrice);
+            }
+        });
+        return wallets;
     }
 }
