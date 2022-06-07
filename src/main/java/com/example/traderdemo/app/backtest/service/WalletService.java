@@ -11,20 +11,17 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.traderdemo.app.backtest.BackTestConst.BID_SLOT;
-import static com.example.traderdemo.app.backtest.BackTestConst.START_BALANCE;
-
 @Transactional(readOnly = true)
 @Slf4j
 @RequiredArgsConstructor
 @Service
 public class WalletService {
 
-    private final AccountCoinWalletRepository accountCoinWalletRepository;
+    private final AccountCoinWalletRepository repository;
 
     @Transactional
     public void deleteAll() {
-        accountCoinWalletRepository.deleteAll();
+        repository.deleteAll();
     }
 
     @Transactional
@@ -33,10 +30,15 @@ public class WalletService {
         for(int i = 0; i < bidSlot; i++) {
             wallets.add(AccountCoinWallet.of(market, balance * market.getPercent() / bidSlot));
         }
-        accountCoinWalletRepository.saveAll(wallets);
+        repository.saveAll(wallets);
     }
 
     public List<AccountCoinWallet> findByMarket(MarketType market) {
-        return accountCoinWalletRepository.findByMarket(market);
+        return repository.findByMarket(market);
+    }
+
+    @Transactional
+    public void save(AccountCoinWallet wallet) {
+        repository.save(wallet);
     }
 }

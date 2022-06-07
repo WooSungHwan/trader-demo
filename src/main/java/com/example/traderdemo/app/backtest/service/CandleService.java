@@ -16,17 +16,17 @@ import java.util.List;
 @Service
 public class CandleService {
 
-    private final FiveMinutesCandleRepository fiveMinutesCandleRepository;
+    private final FiveMinutesCandleRepository repository;
 
     public FiveMinutesCandle findFiveMinutesCandleByKst(String market, LocalDateTime targetDate) {
-        return fiveMinutesCandleRepository.findFiveMinutesCandleByKst(market, targetDate);
+        return repository.findFiveMinutesCandleByKst(market, targetDate);
     }
 
     public List<FiveMinutesCandle> findFiveMinutesCandlesUnderByTimestamp(String market, Long timestamp, int limit) {
-        return fiveMinutesCandleRepository.findFiveMinutesCandlesUnderByTimestamp(market, timestamp, limit);
+        return repository.findFiveMinutesCandlesUnderByTimestamp(market, timestamp, limit);
     }
 
     public FiveMinutesCandle nextCandle(String market, Long timestamp) {
-        return fiveMinutesCandleRepository.nextCandle(timestamp, market);
+        return repository.nextCandle(timestamp, market);
     }
 }

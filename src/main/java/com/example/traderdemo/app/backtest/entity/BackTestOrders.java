@@ -2,7 +2,6 @@ package com.example.traderdemo.app.backtest.entity;
 
 import com.example.traderdemo.app.common.enums.MarketType;
 import com.trader.common.enums.OrdSideType;
-import com.trader.common.indicators.result.RSIs;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -58,11 +57,8 @@ public class BackTestOrders {
     @Column(name = "max_proceed_rate")
     private Double maxProceedRate; // 최대 수익률
 
-    @Column(name = "rsi")
-    private Double rsi;
-
     public static BackTestOrders askOf(MarketType market, Double price, Double volume, Double fee, long timestamp,
-                                       Double proceeds, Double proceedRate, Double maxProceedRate, RSIs rsi) {
+                                       Double proceeds, Double proceedRate, Double maxProceedRate) {
         return BackTestOrders.builder()
                 .market(market)
                 .side(ASK)
@@ -74,12 +70,10 @@ public class BackTestOrders {
                 .proceeds(proceeds)
                 .proceedRate(proceedRate)
                 .maxProceedRate(maxProceedRate)
-                .rsi(rsi.getRsi().get(0))
                 .build();
     }
 
-    public static BackTestOrders bidOf(MarketType market, Double price, Double volume, Double fee, long timestamp
-            , RSIs rsi) {
+    public static BackTestOrders bidOf(MarketType market, Double price, Double volume, Double fee, long timestamp) {
         return BackTestOrders.builder()
                 .market(market)
                 .side(BID)
@@ -88,7 +82,6 @@ public class BackTestOrders {
                 .fee(fee)
                 .createdAt(LocalDateTime.now())
                 .timestamp(timestamp)
-                .rsi(rsi.getRsi().get(0))
                 .build();
     }
 

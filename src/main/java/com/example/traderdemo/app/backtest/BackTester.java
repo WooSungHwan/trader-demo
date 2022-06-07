@@ -89,13 +89,17 @@ public class BackTester {
             AskStrategy askStrategy = new RSIAskStrategy();
             if (isAskable && askStrategy.isAsk(rsi14)) {
                 // 매도
-
+                for (AccountCoinWallet wallet : walletList.getAskableWallets()) {
+                    log.info("{} 현재 캔들", targetCandle.getCandleDateTimeKst());
+                    orderService.ask(targetCandle, wallet);
+                }
             }
 
             // rsi 매수 전략
             BidStrategy bidStrategy = new RSIBidStrategy();
             if (isBidable && bidStrategy.isBid(rsi14)) {
                 // 매수
+                orderService.bid(targetCandle, walletList.getBidableWallet());
             }
 
             // TODO fetch
